@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#173f35">
+  <title>RUA ARTES | Biblioteca de artes</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="RUA ARTES inicio">
+      <span class="brand-mark">RUA</span>
+      <span class="brand-copy"><strong>ARTES</strong><small>Biblioteca de montaje</small></span>
+    </a>
+    <div class="top-meta"><span class="live-dot"></span> Biblioteca de consulta <span class="meta-divider">•</span> Solo lectura</div>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">PREPRENSA · FLEXOGRAFÍA</div>
+        <h1>Encuentra el arte.<br><em>Prepara el montaje.</em></h1>
+        <p>Consulta artes de clientes, revisa referencias y prepara la vista para montaje sin alterar los archivos originales.</p>
+        <a class="onedrive-link" id="openFolder" target="_blank" rel="noopener noreferrer" href="#">
+          <span class="cloud-icon">↗</span> Abrir carpeta compartida de OneDrive
+        </a>
+      </div>
+      <div class="hero-graphic" aria-hidden="true">
+        <div class="art-sheet sheet-back"><span>RUA / PREPRESS</span><i></i><i></i><i></i></div>
+        <div class="art-sheet sheet-front"><div class="sheet-tag">ARTWORK<br><b>REFERENCE</b></div><div class="sheet-lines"></div><div class="sheet-bars"><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b></div><div class="sheet-footer">MONTAJE FLEXOGRÁFICO</div></div>
+        <div class="graphic-orbit orbit-one"></div><div class="graphic-orbit orbit-two"></div>
+      </div>
+    </section>
+
+    <section class="stats" aria-label="Resumen de catálogo">
+      <div class="stat"><span class="stat-icon">▦</span><div><strong id="totalCount">0</strong><small>Artes en catálogo</small></div></div>
+      <div class="stat"><span class="stat-icon">▧</span><div><strong id="imageCount">0</strong><small>Imágenes</small></div></div>
+      <div class="stat"><span class="stat-icon">▤</span><div><strong id="pdfCount">0</strong><small>Documentos PDF</small></div></div>
+      <div class="stat"><span class="stat-icon">↻</span><div><strong>Solo vista</strong><small>Originales protegidos</small></div></div>
+    </section>
+
+    <section class="library">
+      <div class="section-heading">
+        <div><div class="eyebrow">CATÁLOGO</div><h2>Biblioteca de artes</h2><p>Busca por cliente, código, producto o nombre del archivo.</p></div>
+        <button class="button button-light" id="refreshButton" type="button">↻ Actualizar catálogo</button>
+      </div>
+      <div class="search-row">
+        <label class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Buscar arte, cliente, código o producto…" autocomplete="off"><kbd>Buscar</kbd></label>
+        <select id="typeFilter" aria-label="Filtrar por tipo"><option value="all">Todos los formatos</option><option value="image">Imágenes</option><option value="pdf">PDF</option></select>
+      </div>
+      <div class="results-line"><span id="resultLabel">Preparando catálogo…</span><span class="sort-label">Orden: nombre A–Z</span></div>
+      <div id="artGrid" class="art-grid"></div>
+      <div id="emptyState" class="empty-state" hidden>
+        <div class="empty-icon">⌕</div><h3>No encontramos coincidencias</h3><p>Prueba con otro nombre, cliente o código.</p>
+      </div>
+      <div id="setupNotice" class="setup-notice" hidden>
+        <strong>El visor está listo; falta conectar el índice de archivos.</strong>
+        <p>La carpeta compartida está enlazada, pero GitHub Pages no puede enumerar automáticamente todos los archivos de OneDrive solo con el enlace. Cuando se configure un listado público compatible, el buscador podrá llenarse automáticamente.</p>
+      </div>
+    </section>
+    <footer><span>RUA ARTES <span class="footer-dot">•</span> Herramienta de consulta para montaje</span><span>Los cambios de vista no modifican los archivos originales.</span></footer>
+  </main>
+
+  <div class="modal" id="viewerModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close="true"></div>
+    <section class="viewer" role="dialog" aria-modal="true" aria-labelledby="viewerTitle">
+      <header class="viewer-header">
+        <div class="viewer-heading"><span class="file-chip" id="viewerType">ART</span><div><h2 id="viewerTitle">Nombre del arte</h2><p id="viewerSubtitle">Referencia de montaje</p></div></div>
+        <button class="icon-button" id="closeViewer" aria-label="Cerrar visor">✕</button>
+      </header>
+      <div class="viewer-toolbar">
+        <div class="tool-group">
+          <button class="tool-button" id="zoomOut" title="Alejar">−</button><span id="zoomLabel">100%</span><button class="tool-button" id="zoomIn" title="Acercar">+</button>
+        </div>
+        <span class="toolbar-divider"></span>
+        <div class="tool-group">
+          <button class="tool-button" id="rotateLeft" title="Girar a la izquierda">↶ 90°</button>
+          <button class="tool-button" id="rotateRight" title="Girar a la derecha">↻ 90°</button>
+          <button class="tool-button" id="flipH" title="Reflejar horizontalmente">⇆ Reflejo H</button>
+          <button class="tool-button" id="flipV" title="Reflejar verticalmente">⇅ Reflejo V</button>
+          <button class="tool-button reset-tool" id="resetView" title="Restablecer vista">Restablecer</button>
+        </div>
+        <a class="button button-primary" id="openOriginal" target="_blank" rel="noopener noreferrer" href="#">Abrir original ↗</a>
+      </div>
+      <div class="viewer-stage" id="viewerStage"><div class="viewer-placeholder" id="viewerPlaceholder">Selecciona un arte del catálogo para visualizarlo.</div><img id="viewerImage" alt="" hidden><iframe id="viewerPdf" title="Vista previa PDF" hidden></iframe></div>
+      <div class="viewer-footnote">Rotación, reflejos y zoom se aplican únicamente a la vista previa.</div>
+    </section>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
